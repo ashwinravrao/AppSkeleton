@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">AppSkeleton</string>
+    <string name="item_name_placeholder">Baking Soda</string>
+    <string name="item_location_placeholder">Garage Fridge</string>
+    <string name="todo">TODO</string>
 </resources>
