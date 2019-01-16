@@ -1,12 +1,17 @@
 package com.ashwinrao.appskeleton.view.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.ashwinrao.appskeleton.R;
 import com.ashwinrao.appskeleton.data.Item;
 import com.ashwinrao.appskeleton.databinding.ViewholderBinding;
+import com.ashwinrao.appskeleton.view.ui.DetailEditFragment;
+import com.ashwinrao.appskeleton.view.ui.MainActivity;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -48,13 +53,23 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
     }
 
 
-    public class ItemViewHolder extends RecyclerView.ViewHolder {
+    public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ViewholderBinding binding;
 
         public ItemViewHolder(@NonNull ViewholderBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            this.binding.getRoot().setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            DetailEditFragment fragment = new DetailEditFragment();
+            Bundle args = new Bundle();
+            args.putInt("item", getAdapterPosition());
+            fragment.setArguments(args);
+            MainActivity.doFragmentTransaction(fragment);
         }
     }
 }

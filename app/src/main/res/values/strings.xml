@@ -3,8 +3,9 @@
     <string name="item_name_placeholder">Baking Soda</string>
     <string name="item_location_placeholder">Garage Fridge</string>
     <string name="todo">TODO</string>
-    <string name="snackbar_cancel">cancel</string>
+    <string name="snackbar_cancel">Cancel</string>
     <string name="item_name_prompt">Name:</string>
     <string name="item_location_prompt">Location:</string>
     <string name="save">save</string>
+    <string name="lorem_ipsum_p2">Phasellus non orci rhoncus, ultrices dolor efficitur, luctus metus. Mauris elementum rhoncus suscipit. Curabitur fermentum congue est, et dictum ipsum porta vel. Phasellus a diam vitae ante euismod semper. Quisque eu elit efficitur, ornare mauris id, cursus tortor. Curabitur semper vestibulum elit. Etiam a iaculis sapien. In volutpat turpis a lorem tincidunt, eu lobortis quam rutrum. Suspendisse feugiat ante eu posuere malesuada. Nam vehicula risus consequat, hendrerit erat et, dapibus leo. Praesent id dignissim quam, non mollis libero. Fusce ut aliquet turpis. Nunc consequat efficitur aliquet. Fusce tincidunt orci eu ultricies pretium. Aliquam mollis mi non leo pellentesque, porttitor tincidunt neque gravida.</string>
 </resources>
