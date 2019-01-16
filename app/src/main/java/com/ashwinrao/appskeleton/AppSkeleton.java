@@ -23,6 +23,6 @@ public class AppSkeleton extends Application {
 
     public ItemRepository getRepository() {
         Log.d(TAG, "AppSkeleton: getRepository() called");
-        return ItemRepository.getInstance(this, getDatabase());
+        return ItemRepository.getInstance(getDatabase());
     }
 }

@@ -3,4 +3,8 @@
     <string name="item_name_placeholder">Baking Soda</string>
     <string name="item_location_placeholder">Garage Fridge</string>
     <string name="todo">TODO</string>
+    <string name="snackbar_cancel">cancel</string>
+    <string name="item_name_prompt">Name:</string>
+    <string name="item_location_prompt">Location:</string>
+    <string name="save">save</string>
 </resources>

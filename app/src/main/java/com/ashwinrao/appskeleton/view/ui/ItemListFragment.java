@@ -13,6 +13,7 @@ import com.ashwinrao.appskeleton.view.adapter.ItemListAdapter;
 import com.ashwinrao.appskeleton.viewmodel.ItemViewModel;
 import com.ashwinrao.appskeleton.viewmodel.ItemViewModelFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -31,7 +32,6 @@ public class ItemListFragment extends Fragment {
     private ItemListAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private LiveData<List<Item>> mItems;
-    private ItemViewModel mItemViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,26 +39,35 @@ public class ItemListFragment extends Fragment {
 
         mContext = getActivity();
         ItemViewModelFactory factory = ItemViewModelFactory.getInstance(((FragmentActivity) mContext).getApplication());
-        mItemViewModel = factory.create(ItemViewModel.class);
-        mItems = mItemViewModel.getItems();
+        final ItemViewModel viewModel = factory.create(ItemViewModel.class);
+        mItems = viewModel.getItems();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        FragmentListBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_list, container, false);
+        final FragmentListBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_list, container, false);
         mRecyclerView = binding.recyclerview;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        mAdapter = new ItemListAdapter(getActivity());
+        mAdapter = new ItemListAdapter(mContext);
 
         mItems.observe(this, new Observer<List<Item>>() {
             @Override
             public void onChanged(List<Item> items) {
-                mAdapter.setItems(items);
+                if(items != null) { mAdapter.setItems(items); }
+                else { mAdapter.setItems(new ArrayList<Item>()); }
                 mRecyclerView.setAdapter(mAdapter);
             }
         });
+
+        binding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.doFragmentTransaction(new AddItemFragment());
+            }
+        });
+
         return binding.getRoot();
     }
 

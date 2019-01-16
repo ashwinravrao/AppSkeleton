@@ -1,35 +1,27 @@
 package com.ashwinrao.appskeleton.data;
 
 
-import android.app.Application;
-import android.content.Context;
+import com.ashwinrao.appskeleton.util.AsyncTasks;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
-import androidx.work.Worker;
-import androidx.work.WorkerParameters;
 
 public class ItemRepository {
 
     private static final String TAG = "Room";
 
     private ItemDao mDao;
-    private Context mContext;
     private static ItemRepository sInstance;
 
-    public static ItemRepository getInstance(@NonNull Application application, ItemDatabase db) {
+    public static ItemRepository getInstance(ItemDatabase db) {
         if(sInstance == null) {
-            sInstance = new ItemRepository(application, db);
+            sInstance = new ItemRepository(db);
         }
         return sInstance;
     }
 
-    private ItemRepository(Application application, ItemDatabase db) {
-        mContext = application.getApplicationContext();
+    private ItemRepository(ItemDatabase db) {
         mDao = db.mDao();
     }
 
@@ -38,25 +30,9 @@ public class ItemRepository {
     }
 
     public void saveItem(Item item) {
-        OneTimeWorkRequest saveItemRequest = new OneTimeWorkRequest.Builder(ItemSaveWorker.class).addTag("save item").build();
-        WorkManager.getInstance().enqueue(saveItemRequest);
+        new AsyncTasks.SavePersonAsync(mDao).execute(item);
     }
 
-    public class ItemSaveWorker extends Worker {
 
-        private Item mItem;
-
-        public ItemSaveWorker(@NonNull Context context, @NonNull WorkerParameters workerParams, @NonNull Item item) {
-            super(context, workerParams);
-            mItem = item;
-        }
-
-        @NonNull
-        @Override
-        public Result doWork() {
-            mDao.saveItem(mItem);
-            return Result.success();
-        }
-    }
 
 }

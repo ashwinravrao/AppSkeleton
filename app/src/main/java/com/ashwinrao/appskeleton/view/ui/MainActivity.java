@@ -40,4 +40,8 @@ public class MainActivity extends AppCompatActivity {
                 .replace(mFragmentContainer, newFragment)
                 .commit();
     }
+
+    public static void popBackStack() {
+        mFragmentManager.popBackStack();
+    }
 }
