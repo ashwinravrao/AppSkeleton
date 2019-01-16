@@ -1,9 +1,9 @@
 ### AppSkeleton
-App skeleton built using standard Android libraries and patterns...
+Example app built using ...
 
-- Local data source consists of a Room database instance returning LiveData-wrapped objects
+- Room database returning LiveData-wrapped collections via repository pattern
 - MVVM for scalability and Data Binding for convenience
-- Uses AndroidX libraries
-- Dependencies are injected manually, but more complex projects may benefit from a framework
+- AndroidX libraries
+- Manual dependency injection but frameworks could benefit larger projects
 
-This is a portion of an app. The skeleton, if you will, meant to serve as the foundation for a more complex app. I'm writing this project partly as a desk reference and partly for anyone who finds it and finds it useful.
+This is the bare skeleton of an app, built using the most up-to-date first-party libraries
