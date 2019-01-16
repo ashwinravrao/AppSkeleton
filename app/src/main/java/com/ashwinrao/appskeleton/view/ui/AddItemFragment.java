@@ -11,6 +11,8 @@ import com.ashwinrao.appskeleton.databinding.FragmentAddBinding;
 import com.ashwinrao.appskeleton.viewmodel.ItemViewModel;
 import com.ashwinrao.appskeleton.viewmodel.ItemViewModelFactory;
 
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -24,7 +26,7 @@ public class AddItemFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ItemViewModelFactory factory = ItemViewModelFactory.getInstance(getActivity().getApplication());
+        final ItemViewModelFactory factory = ItemViewModelFactory.getInstance(Objects.requireNonNull(getActivity()).getApplication());
         mItemViewModel  = factory.create(ItemViewModel.class);
     }
 

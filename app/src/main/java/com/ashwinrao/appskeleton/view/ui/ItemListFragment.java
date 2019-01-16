@@ -15,6 +15,7 @@ import com.ashwinrao.appskeleton.viewmodel.ItemViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,7 +39,7 @@ public class ItemListFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mContext = getActivity();
-        ItemViewModelFactory factory = ItemViewModelFactory.getInstance(((FragmentActivity) mContext).getApplication());
+        final ItemViewModelFactory factory = ItemViewModelFactory.getInstance(((FragmentActivity) Objects.requireNonNull(mContext)).getApplication());
         final ItemViewModel viewModel = factory.create(ItemViewModel.class);
         mItems = viewModel.getItems();
     }
@@ -50,7 +51,8 @@ public class ItemListFragment extends Fragment {
         final FragmentListBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_list, container, false);
         mRecyclerView = binding.recyclerview;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        mAdapter = new ItemListAdapter(mContext);
+        mAdapter = new ItemListAdapter(mContext, mItems.getValue());
+        mRecyclerView.setAdapter(mAdapter);
 
         mItems.observe(this, new Observer<List<Item>>() {
             @Override

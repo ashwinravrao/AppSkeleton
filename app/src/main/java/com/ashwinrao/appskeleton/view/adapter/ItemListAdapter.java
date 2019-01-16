@@ -19,8 +19,9 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
     private Context mContext;
     private List<Item> mItems;
 
-    public ItemListAdapter(Context context) {
+    public ItemListAdapter(Context context, List<Item> items) {
         mContext = context;
+        mItems = items;
     }
 
     public void setItems(List<Item> items) {
@@ -43,7 +44,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+        return mItems == null ? 0 : mItems.size();
     }
 
 
