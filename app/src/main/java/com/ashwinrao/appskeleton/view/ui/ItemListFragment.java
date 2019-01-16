@@ -10,6 +10,8 @@ import com.ashwinrao.appskeleton.R;
 import com.ashwinrao.appskeleton.data.Item;
 import com.ashwinrao.appskeleton.databinding.FragmentListBinding;
 import com.ashwinrao.appskeleton.view.adapter.ItemListAdapter;
+import com.ashwinrao.appskeleton.viewmodel.ItemViewModel;
+import com.ashwinrao.appskeleton.viewmodel.ItemViewModelFactory;
 
 import java.util.List;
 
@@ -17,25 +19,28 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ItemListFragment extends Fragment {
 
     private Context mContext;
-    private RecyclerView mRecyclerView;
     private ItemListAdapter mAdapter;
+    private RecyclerView mRecyclerView;
     private LiveData<List<Item>> mItems;
+    private ItemViewModel mItemViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mContext = getActivity();
-
-        // Get viewmodel object using factory
-
+        ItemViewModelFactory factory = ItemViewModelFactory.getInstance(((FragmentActivity) mContext).getApplication());
+        mItemViewModel = factory.create(ItemViewModel.class);
+        mItems = mItemViewModel.getItems();
     }
 
     @Nullable
@@ -43,20 +48,18 @@ public class ItemListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         FragmentListBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_list, container, false);
-
         mRecyclerView = binding.recyclerview;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mAdapter = new ItemListAdapter(getActivity());
 
-        // observe LiveData<List<Item>>, update UI on change
-
+        mItems.observe(this, new Observer<List<Item>>() {
+            @Override
+            public void onChanged(List<Item> items) {
+                mAdapter.setItems(items);
+                mRecyclerView.setAdapter(mAdapter);
+            }
+        });
         return binding.getRoot();
-
-    }
-
-    private void updateUI(List<Item> items) {
-        mAdapter.setItems(items);
-        mRecyclerView.setAdapter(mAdapter);
     }
 
 }

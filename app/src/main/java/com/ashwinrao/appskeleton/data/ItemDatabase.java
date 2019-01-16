@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 public abstract class ItemDatabase extends RoomDatabase {
 
-    public static final String TAG = "ItemDatabase";
+    public static final String TAG = "Room";
 
     private static ItemDatabase sInstance;
     public abstract ItemDao mDao();
