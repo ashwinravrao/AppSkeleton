@@ -1,9 +1,8 @@
 ### AppSkeleton
-Example app built using ...
+Template app built using ...
 
-- Room database returning LiveData-wrapped collections via repository pattern
-- MVVM for scalability and Data Binding for convenience
-- AndroidX libraries
-- Manual dependency injection but frameworks could benefit larger projects
-
-This is the bare skeleton of an app, built using the most up-to-date first-party libraries
+- Room
+- AndroidX
+- Dagger 2
+- Repository Pattern
+- MVVM Architectural Pattern
