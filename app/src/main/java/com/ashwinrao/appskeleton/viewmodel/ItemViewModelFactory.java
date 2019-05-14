@@ -1,32 +1,28 @@
 package com.ashwinrao.appskeleton.viewmodel;
 
-import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-public class ItemViewModelFactory extends ViewModelProvider.NewInstanceFactory {
+import com.ashwinrao.appskeleton.data.ItemRepository;
 
-    private static ItemViewModelFactory sInstance;
-    private Application mApplication;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
-    public static synchronized ItemViewModelFactory getInstance(@NonNull Application application) {
-        if(sInstance == null) {
-            sInstance = new ItemViewModelFactory(application);
-        }
-        return sInstance;
-    }
+@Singleton
+public class ItemViewModelFactory implements ViewModelProvider.Factory {
 
-    private ItemViewModelFactory(@NonNull Application application) {
-        super();
-        mApplication = application;
+    private final ItemRepository repo;
+
+    @Inject
+    public ItemViewModelFactory(@NonNull ItemRepository repo) {
+        this.repo = repo;
     }
 
     @SuppressWarnings("unchecked")
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new ItemViewModel(mApplication);
+        return (T) new ItemViewModel(this.repo);
     }
 }

@@ -5,13 +5,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.ashwinrao.appskeleton.R;
 import com.ashwinrao.appskeleton.data.Item;
 import com.ashwinrao.appskeleton.databinding.ViewholderBinding;
 import com.ashwinrao.appskeleton.view.ui.DetailEditFragment;
 import com.ashwinrao.appskeleton.view.ui.MainActivity;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -21,8 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemViewHolder> {
 
-    private Context mContext;
     private List<Item> mItems;
+    private Context mContext;
+
 
     public ItemListAdapter(Context context, List<Item> items) {
         mContext = context;
@@ -56,8 +57,9 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ViewholderBinding binding;
+        private ImageView img;
 
-        public ItemViewHolder(@NonNull ViewholderBinding binding) {
+        ItemViewHolder(@NonNull ViewholderBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
             this.binding.getRoot().setOnClickListener(this);
@@ -66,6 +68,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         @Override
         public void onClick(View v) {
             DetailEditFragment fragment = new DetailEditFragment();
+
             Bundle args = new Bundle();
             args.putInt("item", getAdapterPosition());
             fragment.setArguments(args);

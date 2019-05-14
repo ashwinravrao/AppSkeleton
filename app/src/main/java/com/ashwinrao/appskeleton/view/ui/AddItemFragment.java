@@ -5,29 +5,39 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ashwinrao.appskeleton.AppSkeleton;
 import com.ashwinrao.appskeleton.R;
 import com.ashwinrao.appskeleton.data.Item;
 import com.ashwinrao.appskeleton.databinding.FragmentAddBinding;
 import com.ashwinrao.appskeleton.viewmodel.ItemViewModel;
-import com.ashwinrao.appskeleton.viewmodel.ItemViewModelFactory;
-
-import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
+
+import java.util.Objects;
+
+import javax.inject.Inject;
 
 public class AddItemFragment extends Fragment {
 
-    private ItemViewModel mItemViewModel;
+    @Inject
+    ViewModelProvider.Factory factory;
+
+    private ItemViewModel viewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final ItemViewModelFactory factory = ItemViewModelFactory.getInstance(Objects.requireNonNull(getActivity()).getApplication());
-        mItemViewModel  = factory.create(ItemViewModel.class);
+        ((AppSkeleton) Objects.requireNonNull(getActivity()).getApplication())
+                .getAppComponent()
+                .inject(this);
+
+        viewModel = ViewModelProviders.of(getActivity(), factory).get(ItemViewModel.class);
     }
 
     @Nullable
@@ -37,7 +47,7 @@ public class AddItemFragment extends Fragment {
         binding.saveItemAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mItemViewModel.saveItem(new Item(binding.itemNameInput.getText().toString(), binding.itemLocationInput.getText().toString()));
+                viewModel.saveItem(new Item(binding.itemNameInput.getText().toString(), binding.itemLocationInput.getText().toString()));
                 MainActivity.popBackStack();
             }
         });

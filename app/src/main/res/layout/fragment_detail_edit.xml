@@ -15,6 +15,7 @@
 
         <ImageView
             android:id="@+id/item_photo"
+            android:transitionName="@string/image_transition_name"
             android:src="@drawable/ic_launcher_foreground"
             android:background="@drawable/ic_launcher_background"
             app:layout_constraintLeft_toLeftOf="parent"

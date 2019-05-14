@@ -2,24 +2,26 @@ package com.ashwinrao.appskeleton;
 
 import android.app.Application;
 
-import com.ashwinrao.appskeleton.data.ItemDatabase;
-import com.ashwinrao.appskeleton.data.ItemRepository;
-import com.ashwinrao.appskeleton.view.ui.MainActivity;
+import com.ashwinrao.appskeleton.di.AppComponent;
+import com.ashwinrao.appskeleton.di.AppModule;
+import com.ashwinrao.appskeleton.di.DaggerAppComponent;
+import com.ashwinrao.appskeleton.di.DbModule;
+
 
 public class AppSkeleton extends Application {
 
-    private static final String TAG = MainActivity.class.getName();
+    private AppComponent appComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        appComponent = DaggerAppComponent.builder().dbModule(new DbModule(this)).build();
+
     }
 
-    public ItemDatabase getDatabase() {
-        return ItemDatabase.getInstance(this);
+    public AppComponent getAppComponent() {
+        return appComponent;
     }
 
-    public ItemRepository getRepository() {
-        return ItemRepository.getInstance(getDatabase());
-    }
 }
