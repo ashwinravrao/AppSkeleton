@@ -46,12 +46,17 @@ public class ItemListFragment extends Fragment {
 
         mContext = getActivity();
 
-        ((AppSkeleton) Objects.requireNonNull(getActivity()).getApplication())
+        final ItemViewModel viewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity()), factory).get(ItemViewModel.class);
+        mItems = viewModel.getItems();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        ((AppSkeleton) context.getApplicationContext())
                 .getAppComponent()
                 .inject(this);
-
-        final ItemViewModel viewModel = ViewModelProviders.of(getActivity(), factory).get(ItemViewModel.class);
-        mItems = viewModel.getItems();
     }
 
     @Nullable

@@ -1,5 +1,6 @@
 package com.ashwinrao.appskeleton.view.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,11 +34,16 @@ public class AddItemFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ((AppSkeleton) Objects.requireNonNull(getActivity()).getApplication())
+        viewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity()), factory).get(ItemViewModel.class);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        ((AppSkeleton) context.getApplicationContext())
                 .getAppComponent()
                 .inject(this);
-
-        viewModel = ViewModelProviders.of(getActivity(), factory).get(ItemViewModel.class);
     }
 
     @Nullable

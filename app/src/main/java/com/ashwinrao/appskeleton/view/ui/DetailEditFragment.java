@@ -1,5 +1,6 @@
 package com.ashwinrao.appskeleton.view.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,14 +37,19 @@ public class DetailEditFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ((AppSkeleton) Objects.requireNonNull(getActivity()).getApplication())
-                .getAppComponent()
-                .inject(this);
-
         Bundle args = getArguments();
         mItemIndex = Objects.requireNonNull(args).getInt("item", 0);
 
-        viewModel = ViewModelProviders.of(getActivity(), factory).get(ItemViewModel.class);
+        viewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity()), factory).get(ItemViewModel.class);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        ((AppSkeleton) context.getApplicationContext())
+                .getAppComponent()
+                .inject(this);
     }
 
     @Nullable
