@@ -58,6 +58,8 @@ public class AddItemFragment extends Fragment {
             }
         });
 
+        // Doing stuff here
+
         return binding.getRoot();
     }
 }
